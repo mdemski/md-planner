@@ -1,4 +1,4 @@
-package pl.okpol.mdplanner;
+package pl.okpol.mdplanner.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

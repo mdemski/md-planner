@@ -1,4 +1,4 @@
-package pl.okpol.mdplanner;
+package pl.okpol.mdplanner.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
