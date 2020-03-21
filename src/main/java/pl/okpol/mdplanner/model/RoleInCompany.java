@@ -1,23 +1,26 @@
 package pl.okpol.mdplanner.model;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public class RoleInCompany {
+@Entity
+@Table(name = "roles")
+public class RoleInCompany extends AbstractEntity{
 
-    private List<String> roles;
+    private String role;
 
-    public RoleInCompany(List<String> roles) {
-        this.roles = roles;
+    public RoleInCompany(String role) {
+        this.role = role;
     }
 
-    public List<String> getRoles() {
-        roles.add("handel");
-        roles.add("zaopatrzenie");
-        roles.add("produkcja");
-        return roles;
+    public RoleInCompany() {
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
