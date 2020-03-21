@@ -16,11 +16,10 @@ public class User extends AbstractEntity {
     private String password;
     @Column(name = "first_name")
     private String firstName;
-    @ManyToOne
     @Column(nullable = false)
-    private RoleInCompany role;
+    private String role;
 
-    public User(String email, String password, String firstName, RoleInCompany role) {
+    public User(String email, String password, String firstName, String role) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -54,11 +53,11 @@ public class User extends AbstractEntity {
         this.firstName = firstName;
     }
 
-    public RoleInCompany getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(RoleInCompany role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
