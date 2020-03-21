@@ -11,10 +11,7 @@ public class Pallet extends AbstractEntity {
     private Integer width;
     private Integer depth;
     private Integer height;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "ORDER_PALLET", joinColumns = {
-            @JoinColumn(name = "ORDER_ID", nullable = false) },
-            inverseJoinColumns = {@JoinColumn(name = "PALLET_ID", nullable = false)})
+    @ManyToMany (fetch = FetchType.LAZY, mappedBy = "pallets")
     private List<Order> orders;
 
     public Pallet() {
