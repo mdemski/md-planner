@@ -1,9 +1,6 @@
 package pl.okpol.mdplanner.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -30,13 +27,16 @@ public class Order extends AbstractEntity {
     private LocalDate productionTime;
     private LocalDate dateOfShipment;
     private Integer expectationWeekNumber;
-    @ManyToMany (fetch = FetchType.LAZY, mappedBy = "pallets" )
-    private List<Pallet> palletList;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "ORDER_PALLET", joinColumns = {
+            @JoinColumn(name = "ORDER_ID") },
+            inverseJoinColumns = {@JoinColumn(name = "PALLET_ID")})
+    private List<Pallet> pallets;
     private boolean completed;
     private String comments;
 
 
-    public Order(Integer offerNumber, String referenceNumber, Integer number, String client, String system, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindow, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<Pallet> palletList, boolean completed, String comments) {
+    public Order(Integer offerNumber, String referenceNumber, Integer number, String client, String system, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindow, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<Pallet> pallets, boolean completed, String comments) {
         this.offerNumber = offerNumber;
         this.referenceNumber = referenceNumber;
         this.number = number;
@@ -55,7 +55,7 @@ public class Order extends AbstractEntity {
         this.productionTime = productionTime;
         this.dateOfShipment = dateOfShipment;
         this.expectationWeekNumber = expectationWeekNumber;
-        this.palletList = palletList;
+        this.pallets = pallets;
         this.completed = completed;
         this.comments = comments;
     }
@@ -207,12 +207,12 @@ public class Order extends AbstractEntity {
         this.expectationWeekNumber = expectationWeekNumber;
     }
 
-    public List<Pallet> getPalletList() {
-        return palletList;
+    public List<Pallet> getPallets() {
+        return pallets;
     }
 
-    public void setPalletList(List<Pallet> palletList) {
-        this.palletList = palletList;
+    public void setPallets(List<Pallet> palletList) {
+        this.pallets = palletList;
     }
 
     public boolean isCompleted() {
@@ -256,12 +256,12 @@ public class Order extends AbstractEntity {
                 Objects.equals(productionTime, order.productionTime) &&
                 Objects.equals(dateOfShipment, order.dateOfShipment) &&
                 Objects.equals(expectationWeekNumber, order.expectationWeekNumber) &&
-                Objects.equals(palletList, order.palletList) &&
+                Objects.equals(pallets, order.pallets) &&
                 Objects.equals(comments, order.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), offerNumber, referenceNumber, number, client, system, colour, profileDatedDelivery, hardwareDatedDelivery, glazingDatedDelivery, extrasDatedDelivery, optimizationNumber, windowUnits, numberOfWindow, numberOfDoors, numberOfSlidingDoors, productionTime, dateOfShipment, expectationWeekNumber, palletList, completed, comments);
+        return Objects.hash(super.hashCode(), offerNumber, referenceNumber, number, client, system, colour, profileDatedDelivery, hardwareDatedDelivery, glazingDatedDelivery, extrasDatedDelivery, optimizationNumber, windowUnits, numberOfWindow, numberOfDoors, numberOfSlidingDoors, productionTime, dateOfShipment, expectationWeekNumber, pallets, completed, comments);
     }
 }
