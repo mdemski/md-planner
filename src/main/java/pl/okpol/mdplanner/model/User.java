@@ -2,6 +2,7 @@ package pl.okpol.mdplanner.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ public class User extends AbstractEntity {
     private String password;
     @Column(name = "first_name")
     private String firstName;
+    @ManyToOne
     @Column(nullable = false)
     private RoleInCompany role;
 
