@@ -4,8 +4,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import pl.okpol.mdplanner.model.RoleInCompany;
-
 public class RegistrationFormDTO {
 
     @NotBlank
@@ -19,8 +17,7 @@ public class RegistrationFormDTO {
     private String rePassword;
     @NotBlank
     private String firstName;
-
-    private RoleInCompany role;
+    private String role;
 
     public String getEmail() {
         return email;
@@ -54,11 +51,11 @@ public class RegistrationFormDTO {
         this.firstName = firstName;
     }
 
-    public RoleInCompany getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(RoleInCompany role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }
