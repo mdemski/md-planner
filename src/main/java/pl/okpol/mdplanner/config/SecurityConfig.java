@@ -7,12 +7,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import pl.okpol.mdplanner.repositories.IAuthenticationFacade;
 import pl.okpol.mdplanner.repositories.UserRepository;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -46,23 +54,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/logowanie").permitAll()
+                .antMatchers("/rejestracja").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .formLogin()
                 .loginPage("/logowanie")
                 .usernameParameter("email")
                 .passwordParameter("password")
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+
+                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                        redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, httpServletRequest.getRequestURI());
+
+//                        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+//                            Long userId = userRepository.getUserByEmail(authentication.getName()).getId();
+//                            String userRole = userRepository.getUserByEmail(authentication.getName()).getRole();
+//                            if (userRole.equals("admin")) {
+//                                redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/admin/" + userId);
+//                            } else {
+//                                redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/moje-konto/" + userId);
+//                            }
+//                            //dostęp do użytkownika lub admina
+//                        } else {
+//                            redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/login");
+//                        }
+                    }
+
+                    RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+                })
                 .and().logout()
-                //and wracamy do konfiguracji ogólnej
-                .and().csrf().disable()
-                //wyłączamy analizę csrf
-                .authorizeRequests()
-                //autoryzacja dostępu w tym wypadku dla wszystkich
-                .antMatchers("/rejestracja").permitAll()
-                .antMatchers("/logowanie").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                // wyciągamy role z bazy jeśli chcemy ograniczyć dostęp względem ról (role są najczęściej osobną tabelą ROLE_ADMIN nazwa z bazy danych
-                .anyRequest().authenticated();
-        //robić na końcu bo to idzie od góry (powyższe wykluczają to wymuszenie autoryzacji).
+                .and().csrf().disable();
     }
 
     @Override
