@@ -2,6 +2,7 @@ package pl.okpol.mdplanner.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import pl.okpol.mdplanner.converters.MySimpleUrlAuthenticationSuccessHandler;
 import pl.okpol.mdplanner.repositories.IAuthenticationFacade;
 import pl.okpol.mdplanner.repositories.UserRepository;
 
@@ -41,6 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean("authenticationManager")
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
@@ -49,6 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery("SELECT email, password, true FROM users WHERE email = ?")
                 .authoritiesByUsernameQuery("SELECT email, role FROM users WHERE email = ?")
                 .rolePrefix("");
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new MySimpleUrlAuthenticationSuccessHandler();
     }
 
     @Override
@@ -65,28 +78,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/logowanie")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-
-                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                        redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, httpServletRequest.getRequestURI());
-
-//                        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-//                            Long userId = userRepository.getUserByEmail(authentication.getName()).getId();
-//                            String userRole = userRepository.getUserByEmail(authentication.getName()).getRole();
-//                            if (userRole.equals("admin")) {
-//                                redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/admin/" + userId);
-//                            } else {
-//                                redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/moje-konto/" + userId);
-//                            }
-//                            //dostęp do użytkownika lub admina
-//                        } else {
-//                            redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/login");
-//                        }
-                    }
-
-                    RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-                })
+                .successHandler(myAuthenticationSuccessHandler())
+                .failureUrl("/logowanie")
                 .and().logout()
                 .and().csrf().disable();
     }
