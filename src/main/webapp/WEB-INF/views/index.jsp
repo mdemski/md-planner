@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:url var="mainUrl" value="/"/>
 <main>
-    <a href="${mainUrl}login" class="blue-text">
+    <a href="${mainUrl}logowanie" class="blue-text">
         <h6 class="font-weight-bold mb-3"><i class="fas fa-fire pr-2"></i>Logowanie</h6>
     </a>
     <!-- Excerpt -->
