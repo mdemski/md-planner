@@ -43,15 +43,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">1
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                    <a class="nav-link" href='${mainUrl}rejestracja'>Zaloguj się</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href='${mainUrl}rejestracja'>Zarejestruj się</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href='${mainUrl}moje-konto'>Moje konto</a>
+                    <a class="nav-link" href='${mainUrl}zamowienia'>Zamówienia</a>
                 </li>
             </ul>
         </div>
