@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%--
   Created by IntelliJ IDEA.
   User: MarDem
@@ -10,7 +11,7 @@
 <c:url var="mainUrl" value="/"/>
 <html>
 <head>
-    <title>Konfigurator okienny</title>
+    <title>MDPlanner</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -42,12 +43,25 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
             <ul class="navbar-nav ml-auto nav-flex-icons">
-                <li class="nav-item">
-                    <a class="nav-link" href='${mainUrl}rejestracja'>Zaloguj się</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href='${mainUrl}zamowienia'>Zamówienia</a>
-                </li>
+                <c:choose>
+                    <c:when test="${loggedUser == null}">
+                        <li class="nav-item">
+                            <a class="nav-link" href='${mainUrl}rejestracja'>Zarejestruj</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href='${mainUrl}logowanie'>Zaloguj się</a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        Witaj ${loggedUser.firstName}
+                        <li class="nav-item">
+                            <a class="nav-link" href='${mainUrl}zamowienia'>Zamówienia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href='${mainUrl}logout'>Wyloguj się</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </nav>
