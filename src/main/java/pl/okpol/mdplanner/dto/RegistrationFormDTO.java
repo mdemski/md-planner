@@ -6,16 +6,16 @@ import javax.validation.constraints.Size;
 
 public class RegistrationFormDTO {
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Podaj adres mailowy")
+    @Email(message = "Adres maliowy jest niepoprawny")
     private String email;
-    @NotBlank
-    @Size(min = 8)
+    @NotBlank(message = "Podaj hasło")
+    @Size(min = 8, message = "Hasło musi posiadać conajmniej 8 znaków")
     private String password;
     @NotBlank
     @Size(min = 8)
     private String rePassword;
-    @NotBlank
+    @NotBlank(message = "Podaj imię")
     private String firstName;
     private String role;
 
