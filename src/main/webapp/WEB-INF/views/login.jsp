@@ -28,16 +28,17 @@
                     <div class="card-body">
 
                         <form:form class="text-center border border-light p-5" method="post" modelAttribute="loginData">
-                            <form:errors path="*"/>
                             <p class="h4 mb-4">Zaloguj</p>
 
                             <!-- Email -->
                             <form:input path="email" id="defaultLoginFormEmail" class="form-control mb-4"
                                         placeholder="E-mail"/>
+                            <form:errors path="email"/>
 
                             <!-- Password -->
                             <form:password path="password" id="defaultLoginFormPassword" class="form-control mb-4"
                                            placeholder="Hasło"/>
+                            <form:errors path="password"/>
 
                             <!-- Login button -->
                             <button class="btn btn-info btn-block my-4" type="submit">Zaloguj</button>
