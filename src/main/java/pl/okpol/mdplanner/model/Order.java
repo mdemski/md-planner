@@ -21,7 +21,7 @@ public class Order extends AbstractEntity {
     private LocalDate extrasDatedDelivery;
     private Integer optimizationNumber;
     private Double windowUnits;
-    private Integer numberOfWindow;
+    private Integer numberOfWindows;
     private Integer numberOfDoors;
     private Integer numberOfSlidingDoors;
     private LocalDate productionTime;
@@ -36,7 +36,7 @@ public class Order extends AbstractEntity {
     private String comments;
 
 
-    public Order(Integer offerNumber, String referenceNumber, Integer number, String client, String system, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindow, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<Pallet> pallets, boolean completed, String comments) {
+    public Order(Integer offerNumber, String referenceNumber, Integer number, String client, String system, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<Pallet> pallets, boolean completed, String comments) {
         this.offerNumber = offerNumber;
         this.referenceNumber = referenceNumber;
         this.number = number;
@@ -49,7 +49,7 @@ public class Order extends AbstractEntity {
         this.extrasDatedDelivery = extrasDatedDelivery;
         this.optimizationNumber = optimizationNumber;
         this.windowUnits = windowUnits;
-        this.numberOfWindow = numberOfWindow;
+        this.numberOfWindows = numberOfWindows;
         this.numberOfDoors = numberOfDoors;
         this.numberOfSlidingDoors = numberOfSlidingDoors;
         this.productionTime = productionTime;
@@ -159,12 +159,12 @@ public class Order extends AbstractEntity {
         this.windowUnits = windowUnits;
     }
 
-    public Integer getNumberOfWindow() {
-        return numberOfWindow;
+    public Integer getNumberOfWindows() {
+        return numberOfWindows;
     }
 
-    public void setNumberOfWindow(Integer numberOfWindow) {
-        this.numberOfWindow = numberOfWindow;
+    public void setNumberOfWindows(Integer numberOfWindow) {
+        this.numberOfWindows = numberOfWindow;
     }
 
     public Integer getNumberOfDoors() {
@@ -250,7 +250,7 @@ public class Order extends AbstractEntity {
                 Objects.equals(extrasDatedDelivery, order.extrasDatedDelivery) &&
                 Objects.equals(optimizationNumber, order.optimizationNumber) &&
                 Objects.equals(windowUnits, order.windowUnits) &&
-                Objects.equals(numberOfWindow, order.numberOfWindow) &&
+                Objects.equals(numberOfWindows, order.numberOfWindows) &&
                 Objects.equals(numberOfDoors, order.numberOfDoors) &&
                 Objects.equals(numberOfSlidingDoors, order.numberOfSlidingDoors) &&
                 Objects.equals(productionTime, order.productionTime) &&
@@ -262,6 +262,6 @@ public class Order extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), offerNumber, referenceNumber, number, client, system, colour, profileDatedDelivery, hardwareDatedDelivery, glazingDatedDelivery, extrasDatedDelivery, optimizationNumber, windowUnits, numberOfWindow, numberOfDoors, numberOfSlidingDoors, productionTime, dateOfShipment, expectationWeekNumber, pallets, completed, comments);
+        return Objects.hash(super.hashCode(), offerNumber, referenceNumber, number, client, system, colour, profileDatedDelivery, hardwareDatedDelivery, glazingDatedDelivery, extrasDatedDelivery, optimizationNumber, windowUnits, numberOfWindows, numberOfDoors, numberOfSlidingDoors, productionTime, dateOfShipment, expectationWeekNumber, pallets, completed, comments);
     }
 }
