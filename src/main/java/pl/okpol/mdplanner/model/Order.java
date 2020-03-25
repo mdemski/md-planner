@@ -273,4 +273,31 @@ public class Order extends AbstractEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), offerNumber, referenceNumber, number, client, system, colour, profileDatedDelivery, hardwareDatedDelivery, glazingDatedDelivery, extrasDatedDelivery, optimizationNumber, windowUnits, numberOfWindows, numberOfDoors, numberOfSlidingDoors, productionTime, dateOfShipment, expectationWeekNumber, pallets, completed, comments);
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "offerNumber=" + offerNumber +
+                ", referenceNumber='" + referenceNumber + '\'' +
+                ", number=" + number +
+                ", client='" + client + '\'' +
+                ", system='" + system + '\'' +
+                ", colour='" + colour + '\'' +
+                ", profileDatedDelivery=" + profileDatedDelivery +
+                ", hardwareDatedDelivery=" + hardwareDatedDelivery +
+                ", glazingDatedDelivery=" + glazingDatedDelivery +
+                ", extrasDatedDelivery=" + extrasDatedDelivery +
+                ", optimizationNumber=" + optimizationNumber +
+                ", windowUnits=" + windowUnits +
+                ", numberOfWindows=" + numberOfWindows +
+                ", numberOfDoors=" + numberOfDoors +
+                ", numberOfSlidingDoors=" + numberOfSlidingDoors +
+                ", productionTime=" + productionTime +
+                ", dateOfShipment=" + dateOfShipment +
+                ", expectationWeekNumber=" + expectationWeekNumber +
+                ", pallets=" + pallets +
+                ", completed=" + completed +
+                ", comments='" + comments + '\'' +
+                '}';
+    }
 }
