@@ -1,6 +1,9 @@
 package pl.okpol.mdplanner.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -15,16 +18,22 @@ public class Order extends AbstractEntity {
     private String client;
     private String system;
     private String colour;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate profileDatedDelivery;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate hardwareDatedDelivery;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate glazingDatedDelivery;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate extrasDatedDelivery;
     private Integer optimizationNumber;
     private Double windowUnits;
     private Integer numberOfWindows;
     private Integer numberOfDoors;
     private Integer numberOfSlidingDoors;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate productionTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfShipment;
     private Integer expectationWeekNumber;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
