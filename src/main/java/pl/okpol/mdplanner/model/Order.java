@@ -3,7 +3,6 @@ package pl.okpol.mdplanner.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +15,7 @@ public class Order extends AbstractEntity {
     private String referenceNumber;
     private Integer number;
     private String client;
-    private String system;
+    private String profileSystem;
     private String colour;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate profileDatedDelivery;
@@ -45,12 +44,12 @@ public class Order extends AbstractEntity {
     private String comments;
 
 
-    public Order(Integer offerNumber, String referenceNumber, Integer number, String client, String system, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<Pallet> pallets, boolean completed, String comments) {
+    public Order(Integer offerNumber, String referenceNumber, Integer number, String client, String profileSystem, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<Pallet> pallets, boolean completed, String comments) {
         this.offerNumber = offerNumber;
         this.referenceNumber = referenceNumber;
         this.number = number;
         this.client = client;
-        this.system = system;
+        this.profileSystem = profileSystem;
         this.colour = colour;
         this.profileDatedDelivery = profileDatedDelivery;
         this.hardwareDatedDelivery = hardwareDatedDelivery;
@@ -104,12 +103,12 @@ public class Order extends AbstractEntity {
         this.client = client;
     }
 
-    public String getSystem() {
-        return system;
+    public String getProfileSystem() {
+        return profileSystem;
     }
 
-    public void setSystem(String system) {
-        this.system = system;
+    public void setProfileSystem(String system) {
+        this.profileSystem = system;
     }
 
     public String getColour() {
@@ -251,7 +250,7 @@ public class Order extends AbstractEntity {
                 Objects.equals(referenceNumber, order.referenceNumber) &&
                 Objects.equals(number, order.number) &&
                 Objects.equals(client, order.client) &&
-                Objects.equals(system, order.system) &&
+                Objects.equals(profileSystem, order.profileSystem) &&
                 Objects.equals(colour, order.colour) &&
                 Objects.equals(profileDatedDelivery, order.profileDatedDelivery) &&
                 Objects.equals(hardwareDatedDelivery, order.hardwareDatedDelivery) &&
@@ -271,7 +270,7 @@ public class Order extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), offerNumber, referenceNumber, number, client, system, colour, profileDatedDelivery, hardwareDatedDelivery, glazingDatedDelivery, extrasDatedDelivery, optimizationNumber, windowUnits, numberOfWindows, numberOfDoors, numberOfSlidingDoors, productionTime, dateOfShipment, expectationWeekNumber, pallets, completed, comments);
+        return Objects.hash(super.hashCode(), offerNumber, referenceNumber, number, client, profileSystem, colour, profileDatedDelivery, hardwareDatedDelivery, glazingDatedDelivery, extrasDatedDelivery, optimizationNumber, windowUnits, numberOfWindows, numberOfDoors, numberOfSlidingDoors, productionTime, dateOfShipment, expectationWeekNumber, pallets, completed, comments);
     }
 
     @Override
@@ -281,7 +280,7 @@ public class Order extends AbstractEntity {
                 ", referenceNumber='" + referenceNumber + '\'' +
                 ", number=" + number +
                 ", client='" + client + '\'' +
-                ", system='" + system + '\'' +
+                ", system='" + profileSystem + '\'' +
                 ", colour='" + colour + '\'' +
                 ", profileDatedDelivery=" + profileDatedDelivery +
                 ", hardwareDatedDelivery=" + hardwareDatedDelivery +
