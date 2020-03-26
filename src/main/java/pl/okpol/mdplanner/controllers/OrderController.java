@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import pl.okpol.mdplanner.dto.OrderDTO;
+import pl.okpol.mdplanner.dto.AddedOrderDTO;
 import pl.okpol.mdplanner.services.OrderService;
 
 import java.io.BufferedReader;
@@ -28,7 +28,8 @@ public class OrderController {
     }
 
     @GetMapping
-    public String prepareOrdersPage() {
+    public String prepareOrdersPage(Model model) {
+        model.addAttribute("orders", orderService.getAllToProduceOrders());
         return "orders";
     }
 
@@ -42,13 +43,13 @@ public class OrderController {
             // parse CSV file to create a list of `User` objects
             try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 
-                CsvToBean<OrderDTO> csvToBean = new CsvToBeanBuilder(reader)
-                        .withType(OrderDTO.class)
+                CsvToBean<AddedOrderDTO> csvToBean = new CsvToBeanBuilder(reader)
+                        .withType(AddedOrderDTO.class)
                         .withIgnoreLeadingWhiteSpace(true)
                         .build();
-                List<OrderDTO> newOrders = csvToBean.parse();
+                List<AddedOrderDTO> newOrders = csvToBean.parse();
 
-                for (OrderDTO newOrder : newOrders) {
+                for (AddedOrderDTO newOrder : newOrders) {
                     orderService.saveOrderInDB(newOrder);
                 }
 
