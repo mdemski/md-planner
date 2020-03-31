@@ -2,9 +2,9 @@ package pl.okpol.mdplanner.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -18,12 +18,14 @@ public class User extends AbstractEntity {
     private String firstName;
     @Column(nullable = false)
     private String role;
+    private UUID uuid;
 
-    public User(String email, String password, String firstName, String role) {
+    public User(String email, String password, String firstName, String role, UUID uuid) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.role = role;
+        this.uuid = uuid;
     }
 
     public User() {
