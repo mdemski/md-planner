@@ -42,4 +42,8 @@ public class RegistrationService {
         users.add(user);
         userRepository.save(user);
     }
+
+    public boolean checkEmailUUID(String userEmail, String uuid) {
+        return userRepository.getByEmail(userEmail).getUuid().equals(uuid);
+    }
 }
