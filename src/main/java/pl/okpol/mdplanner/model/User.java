@@ -1,8 +1,6 @@
 package pl.okpol.mdplanner.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -29,6 +27,20 @@ public class User extends AbstractEntity {
     }
 
     public User() {
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        uuid = UUID.randomUUID();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        uuid = UUID.randomUUID();
     }
 
     public String getEmail() {
