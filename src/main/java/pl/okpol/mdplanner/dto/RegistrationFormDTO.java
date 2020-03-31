@@ -6,6 +6,8 @@ import javax.validation.constraints.Size;
 
 public class RegistrationFormDTO {
 
+    private Long id;
+
     @NotBlank(message = "Podaj adres mailowy")
     @Email(message = "Adres maliowy jest niepoprawny")
     private String email;
@@ -18,6 +20,14 @@ public class RegistrationFormDTO {
     @NotBlank(message = "Podaj imię")
     private String firstName;
     private String role;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return email;
