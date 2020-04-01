@@ -18,6 +18,10 @@ public class LoginController {
 
     private UserService userService;
 
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping
     public String prepareLoginPage(Model model) {
         model.addAttribute("loginData", new UserLoginDTO());
@@ -26,17 +30,24 @@ public class LoginController {
 
     @PostMapping
     public String processLoginPage(@ModelAttribute("loginData") @Valid UserLoginDTO loginData, BindingResult result) {
-        if (!result.hasErrors()) {
-            return "redirect:/zamowienia";
-        } else {
-            if (loginData.getEmail() == null) {
-                result.rejectValue("email", null, "Brak adresu w bazie danych. Zarejestruj konto.");
-            } else if (!(userService.getUserByEmail(loginData.getEmail()).isActivated())) {
-                result.rejectValue("email", null, "Konto nie zostało aktywowane. Aktywuj konto.");
-            }
-            result.rejectValue("email", null, "Podany email lub hasło są niepoprawne.");
-            result.rejectValue("password", null, "Podany email lub hasło są niepoprawne.");
+        if (userService.getUserByEmail(loginData.getEmail()).isActivated()) {
+            result.rejectValue("email", null, "Konto nie zostało aktywowane. Aktywuj konto.");
             return "login";
+        } else {
+            if (!result.hasErrors()) {
+                return "redirect:/zamowienia";
+            } else {
+                if (!(loginData.getPassword().equals(userService.getUserByEmail(loginData.getEmail())))) {
+                    result.rejectValue("password", null, "Podany email lub hasło są niepoprawne.");
+                    return "login";
+                } else if (!(loginData.getEmail().equals(userService.getUserByEmail(loginData.getEmail())))) {
+                    result.rejectValue("email", null, "Podany email lub hasło są niepoprawne.");
+                    return "login";
+                } else {
+                    result.rejectValue("email", null, "Podany email lub hasło są niepoprawne.");
+                    return "login";
+                }
+            }
         }
     }
 }
