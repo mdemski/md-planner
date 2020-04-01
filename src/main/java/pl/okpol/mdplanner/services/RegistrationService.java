@@ -38,6 +38,7 @@ public class RegistrationService {
         user.setPassword(encodedPassword);
         user.setFirstName(data.getFirstName());
         user.setRole(data.getRole());
+        user.setActivated(data.isActivated());
         List<User> users = new ArrayList<>();
         users.add(user);
         userRepository.save(user);
