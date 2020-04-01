@@ -31,6 +31,8 @@ public class LoginController {
         } else {
             if (loginData.getEmail() == null) {
                 result.rejectValue("email", null, "Brak adresu w bazie danych. Zarejestruj konto.");
+            } else if (!(userService.getUserByEmail(loginData.getEmail()).isActivated())) {
+                result.rejectValue("email", null, "Konto nie zostało aktywowane. Aktywuj konto.");
             }
             result.rejectValue("email", null, "Podany email lub hasło są niepoprawne.");
             result.rejectValue("password", null, "Podany email lub hasło są niepoprawne.");
