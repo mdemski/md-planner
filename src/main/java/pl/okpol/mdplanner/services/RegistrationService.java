@@ -46,4 +46,8 @@ public class RegistrationService {
     public boolean checkEmailUUID(String userEmail, String uuid) {
         return userRepository.getByEmail(userEmail).getUuid().equals(uuid);
     }
+
+    public void setToActivated(User userByEmail) {
+        userByEmail.setActivated(true);
+    }
 }
