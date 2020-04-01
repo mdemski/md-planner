@@ -17,16 +17,26 @@ public class User extends AbstractEntity {
     @Column(nullable = false)
     private String role;
     private UUID uuid;
+    private boolean activated;
 
-    public User(String email, String password, String firstName, String role, UUID uuid) {
+    public User(String email, String password, String firstName, String role, UUID uuid, boolean activated) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.role = role;
         this.uuid = uuid;
+        this.activated = activated;
     }
 
     public User() {
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 
     public UUID getUuid() {
