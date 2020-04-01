@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.okpol.mdplanner.dto.RegistrationFormDTO;
+import pl.okpol.mdplanner.services.EmailService;
 import pl.okpol.mdplanner.services.RegistrationService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +21,11 @@ import java.util.List;
 public class RegistrationController {
 
     private RegistrationService registrationService;
+    private EmailService emailService;
 
-    public RegistrationController(RegistrationService registrationService) {
+    public RegistrationController(RegistrationService registrationService, EmailService emailService) {
         this.registrationService = registrationService;
+        this.emailService = emailService;
     }
 
     @GetMapping
@@ -30,13 +34,14 @@ public class RegistrationController {
         roles.add("zaopatrzenie");
         roles.add("handel");
         roles.add("produkcja");
-        model.addAttribute("data", new RegistrationFormDTO());
+        roles.add("zaopatrzenie");
+        model.addAttribute("data", new RegistrationFormDTO(false));
         model.addAttribute("roles", roles);
         return "registration";
     }
 
     @PostMapping()
-    public String processRegistrationPage(@ModelAttribute("data") @Valid RegistrationFormDTO data, BindingResult result) {
+    public String processRegistrationPage(@ModelAttribute("data") @Valid RegistrationFormDTO data, BindingResult result, HttpServletRequest servletRequest) {
         if (result.hasErrors()) { //walidacja poprawności wpisanych danych
             return "registration";
         }
@@ -48,7 +53,11 @@ public class RegistrationController {
             result.rejectValue("email", null, "Email jest już zajęty");
             return "registration";
         }
+
+        String serverAddress = servletRequest.getRequestURL().substring(0,servletRequest.getRequestURL().length()-servletRequest.getRequestURI().length())+servletRequest.getServletContext().getContextPath();
         registrationService.registerUser(data);
-        return "redirect:/login";
+        emailService.sendActiveUser(data.getEmail(), serverAddress);
+
+        return "redirect:/proces-rejestracji";
     }
 }
