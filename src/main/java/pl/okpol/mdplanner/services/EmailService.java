@@ -39,7 +39,7 @@ public class EmailService {
             mimeMessage.setContent(htmlMsg, "text/html;charset=utf-8");
             helper.setTo(email);
             helper.setSubject(title);
-            helper.setFrom("m.demski@outlook.com");
+            helper.setFrom("mdplanner@okpol.pl");
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             e.printStackTrace();
