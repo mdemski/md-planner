@@ -49,8 +49,10 @@
                                                placeholder="Powtórz hasło"/>
 
                                 <p class="h4 mb-4">Rola w firmie</p>
-                                <!-- Rola -->
+                                <!-- Rola TODO: dodać wymuszenie wybrania którejś z opcji mimo wpisanie złych danych -->
                                 <form:select path="role" items="${roles}"/><br><br>
+
+                                <form:hidden path="activated" value="false"/>
 
                                 <!-- Register button -->
                                 <button class="btn btn-info btn-block my-4" type="submit">Zarejestruj</button>
