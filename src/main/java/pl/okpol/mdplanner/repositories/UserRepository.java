@@ -11,4 +11,5 @@ public interface UserRepository<T extends AbstractEntity, L extends Number> exte
     long countByEmail(String email);
     User getByEmail(String email);
     Optional<User> findById(Long userId);
+    User findByEmail(String email);
 }
