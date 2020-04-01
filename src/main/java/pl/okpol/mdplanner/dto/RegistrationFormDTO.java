@@ -3,6 +3,7 @@ package pl.okpol.mdplanner.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 public class RegistrationFormDTO {
 
@@ -20,9 +21,31 @@ public class RegistrationFormDTO {
     @NotBlank(message = "Podaj imię")
     private String firstName;
     private String role;
+    private UUID uuid;
+    private boolean activated;
+
+    public RegistrationFormDTO(boolean activated) {
+        this.activated = activated;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public void setId(Long id) {
