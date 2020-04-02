@@ -63,7 +63,6 @@ public class UserService {
 
     public void setToActivated(User userByEmail) {
         userByEmail.setActivated(true);
-        userRepository.save(userByEmail);
     }
 
     public void updateUser(User user) {
