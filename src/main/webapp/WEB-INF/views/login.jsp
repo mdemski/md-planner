@@ -27,6 +27,10 @@
                     <!-- Card content -->
                     <div class="card-body">
 
+                        <c:when test="${successMessage != null}">
+                            <h3>${successMessage}</h3>
+                        </c:when>
+
                         <form:form class="text-center border border-light p-5" method="post" modelAttribute="loginData">
                             <p class="h4 mb-4">Zaloguj</p>
 
