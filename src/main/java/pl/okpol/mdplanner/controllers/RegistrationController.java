@@ -55,7 +55,7 @@ public class RegistrationController {
             String serverAddress = servletRequest.getRequestURL().substring(0, servletRequest.getRequestURL().length() - servletRequest.getRequestURI().length()) + servletRequest.getServletContext().getContextPath();
             userService.registerUser(data);
             emailService.sendActiveUser(data.getEmail(), serverAddress);
-            return "redirect:/proces-rejestracji";
+            return "redirect:/rejestracja/proces-rejestracji";
         }
     }
 
@@ -64,9 +64,9 @@ public class RegistrationController {
         return "registerProcess";
     }
 
-    @GetMapping("/proces-rejestracji?userEmail={userEmail}&userUUID={UUID}")
-    public String registrationProcessPage(@RequestParam(required = false, name = "UUID") String UUID,
-                                          @RequestParam(required = false, name = "userEmail") String userEmail,
+    @GetMapping("/aktywacja?userEmail={userEmail}&userUUID={UUID}")
+    public String registrationProcessPage(@PathVariable(required = false, name = "UUID") String UUID,
+                                          @PathVariable(required = false, name = "userEmail") String userEmail,
                                           Model model) {
         if (userEmail != null) {
             if (userService.checkEmailUUID(userEmail, UUID)) {
@@ -78,6 +78,6 @@ public class RegistrationController {
                 model.addAttribute("errorMessage", "Nie udało się poprawnie założyć konta, spróbuj ponownie");
             }
         }
-        return "login";
+        return "/login";
     }
 }
