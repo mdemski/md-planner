@@ -65,8 +65,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/logowanie").permitAll()
+//                /signup* is used to match paths like /signup?xyz&abc=1 and /signup/** will match /signup/user kind of paths
                 .antMatchers("/rejestracja/**").permitAll()
+                .antMatchers("/logowanie").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
