@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Konto założone poprawnie. Sprawdź skrzynkę pocztową aby dokończyć rejestrację.</h1>
+                <h3>Konto założone poprawnie. Sprawdź skrzynkę pocztową aby dokończyć rejestrację.</h3>
             </div>
         </div>
     </div>
