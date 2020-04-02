@@ -14,15 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <c:choose>
-                    <c:when test="${successMessage != null}">
-                        <h1>${successMessage}</h1> </br>
-                        <a href="${mainUrl}/logowanie">Zaloguj</a>
-                    </c:when>
-                    <c:otherwise>
-                        <h1>${errorMessage}</h1>
-                    </c:otherwise>
-                </c:choose>
+                <h1>Konto założone poprawnie. Sprawdź skrzynkę pocztową aby dokończyć rejestrację.</h1>
             </div>
         </div>
     </div>
