@@ -22,7 +22,7 @@ public class EmailService {
     public void sendActiveUser(String email, String serverAddress) {
         User user = userService.findByEmail(email);
         String htmlMsg = "Naciśnij <a href=\""
-                + serverAddress + "/users/register_process?userEmail="
+                + serverAddress + "/rejestracja/aktywacja?userEmail="
                 + email + "&userUUID="
                 + user.getUuid().toString()
                 + "\">link</a> żeby aktywować konto";
