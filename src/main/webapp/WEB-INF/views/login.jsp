@@ -34,8 +34,6 @@
                                     <h3>${successMessage}</h3>
                                 </c:when>
                             </c:choose>
-
-
                             <form:form class="text-center border border-light p-5" method="post"
                                        modelAttribute="loginData">
                                 <p class="h4 mb-4">Zaloguj</p>
