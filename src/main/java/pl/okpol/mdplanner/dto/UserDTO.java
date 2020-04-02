@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
-public class RegistrationFormDTO {
+public class UserDTO {
 
     private Long id;
 
@@ -24,7 +24,7 @@ public class RegistrationFormDTO {
     private UUID uuid;
     private boolean activated;
 
-    public RegistrationFormDTO(boolean activated) {
+    public UserDTO(boolean activated) {
         this.activated = activated;
     }
 
