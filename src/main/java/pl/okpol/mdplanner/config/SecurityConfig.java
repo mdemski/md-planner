@@ -55,11 +55,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rolePrefix("");
     }
 
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
-        return new MySimpleUrlAuthenticationSuccessHandler();
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
