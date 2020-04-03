@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
 
                 .formLogin()
-                .loginPage("/users/login").successForwardUrl("/")
+                .loginPage("/logowanie").successForwardUrl("/zamowienia")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and().logout().logoutSuccessUrl("/")
