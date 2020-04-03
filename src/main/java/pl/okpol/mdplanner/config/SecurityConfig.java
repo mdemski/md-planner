@@ -63,23 +63,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+
+                .formLogin()
+                .loginPage("/users/login").successForwardUrl("/")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .and().logout().logoutSuccessUrl("/")
+                .and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
 //                /signup* is used to match paths like /signup?xyz&abc=1 and /signup/** will match /signup/user kind of paths
                 .antMatchers("/rejestracja/**").permitAll()
                 .antMatchers("/logowanie").permitAll()
                 .antMatchers("/resources/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/logowanie")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .successHandler(myAuthenticationSuccessHandler())
-                .failureUrl("/logowanie")
-                .and().logout()
-                .logoutSuccessUrl("/")
-                .and().csrf().disable();
+                .anyRequest().authenticated();
     }
 
     @Override
