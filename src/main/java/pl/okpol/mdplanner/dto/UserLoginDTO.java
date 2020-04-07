@@ -12,6 +12,15 @@ public class UserLoginDTO {
     @NotBlank
     @Size(min = 8)
     private String password;
+    private boolean activated;
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
 
     public String getEmail() {
         return email;
