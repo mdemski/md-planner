@@ -3,7 +3,6 @@ package pl.okpol.mdplanner.services;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import pl.okpol.mdplanner.model.User;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -19,13 +18,12 @@ public class EmailService {
         this.userService = userService;
     }
 
-    public void sendActiveUser(String email, String serverAddress) {
-        User user = userService.findByEmail(email);
+    public void sendActiveUser(String email, String uuid, String serverAddress) {
         String htmlMsg = "Naciśnij <a href=\""
-                + serverAddress + "/rejestracja/aktywacja?userEmail="
-                + email + "&userUUID="
-                + user.getUuid().toString()
-                + "\">link</a> żeby aktywować konto";
+                + "http://localhost:4200" + "/aktywacja/"
+                + email + "&"
+                + uuid
+                + "\">aktywuj</a> żeby aktywować konto";
         String title = "MDPlanner - link do aktywacji konta";
         sendHTMLMessage(email,htmlMsg,title);
     }
