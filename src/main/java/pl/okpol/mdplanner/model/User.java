@@ -2,7 +2,6 @@ package pl.okpol.mdplanner.model;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -16,10 +15,10 @@ public class User extends AbstractEntity {
     private String firstName;
     @Column(nullable = false)
     private String role;
-    private UUID uuid;
+    private String uuid;
     private boolean activated;
 
-    public User(String email, String password, String firstName, String role, UUID uuid, boolean activated) {
+    public User(String email, String password, String firstName, String role, String uuid, boolean activated) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -39,18 +38,12 @@ public class User extends AbstractEntity {
         this.activated = activated;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    @PrePersist
-    public void prePersist() {
-        uuid = UUID.randomUUID();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        uuid = UUID.randomUUID();
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getEmail() {
@@ -91,14 +84,16 @@ public class User extends AbstractEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return Objects.equals(email, user.email) &&
+        return activated == user.activated &&
+                Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(firstName, user.firstName) &&
-                Objects.equals(role, user.role);
+                Objects.equals(role, user.role) &&
+                Objects.equals(uuid, user.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), email, password, firstName, role);
+        return Objects.hash(super.hashCode(), email, password, firstName, role, uuid, activated);
     }
 }
