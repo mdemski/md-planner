@@ -1,53 +1,45 @@
 package pl.okpol.mdplanner.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 import pl.okpol.mdplanner.dto.UserLoginDTO;
+import pl.okpol.mdplanner.mappers.UserMapper;
+import pl.okpol.mdplanner.model.User;
 import pl.okpol.mdplanner.services.UserService;
 
 import javax.validation.Valid;
 
-@Controller
-@RequestMapping("/logowanie")
+@RestController
+@RequestMapping("/api/login")
+@CrossOrigin
 public class LoginController {
 
     private UserService userService;
+    private UserMapper userMapper;
 
-    public LoginController(UserService userService) {
+    public LoginController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
-    }
-
-    @GetMapping
-    public String prepareLoginPage(Model model) {
-        model.addAttribute("loginData", new UserLoginDTO());
-        return "login";
+        this.userMapper = userMapper;
     }
 
     @PostMapping
-    public String processLoginPage(@ModelAttribute("loginData") @Valid UserLoginDTO loginData, BindingResult result) {
-        if (userService.getUserByEmail(loginData.getEmail()).isActivated()) {
-            result.rejectValue("email", null, "Konto nie zostało aktywowane. Aktywuj konto.");
-            return "login";
-        } else {
-            if (!result.hasErrors()) {
-                return "redirect:/zamowienia";
-            } else {
-                if (!(loginData.getPassword().equals(userService.getUserByEmail(loginData.getEmail())))) {
-                    result.rejectValue("password", null, "Podany email lub hasło są niepoprawne.");
-                    return "login";
-                } else if (!(loginData.getEmail().equals(userService.getUserByEmail(loginData.getEmail())))) {
-                    result.rejectValue("email", null, "Podany email lub hasło są niepoprawne.");
-                    return "login";
-                } else {
-                    result.rejectValue("email", null, "Podany email lub hasło są niepoprawne.");
-                    return "login";
-                }
+    public User processLoginPage(@Valid @RequestBody UserLoginDTO loginData, BindingResult result) {
+        if (result.hasErrors()) {
+            for (ObjectError error : result.getAllErrors()) {
+                System.out.println(error.toString());
             }
         }
+        User logInUser = userService.findByEmail(loginData.getEmail());
+        if (logInUser == null) {
+            System.out.println("Failed to login, no user in database.");
+        } else if (logInUser.isActivated()) {
+            System.out.println("Login success, current user: " + logInUser.getFirstName());
+        } else if (!loginData.getPassword().equals(logInUser.getPassword())){
+            System.out.println("Failed to login, bad credentials.");
+        } else {
+            System.out.println("Failed to login.");
+        }
+        return userMapper.convertToUserEntity(loginData.getEmail());
     }
 }
