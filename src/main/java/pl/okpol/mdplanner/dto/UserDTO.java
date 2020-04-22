@@ -21,11 +21,19 @@ public class UserDTO {
     @NotBlank(message = "Podaj imię")
     private String firstName;
     private String role;
-    private UUID uuid;
+    private String uuid;
     private boolean activated;
 
-    public UserDTO(boolean activated) {
-        this.activated = activated;
+    public UserDTO() {
+
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public boolean isActivated() {
@@ -38,14 +46,6 @@ public class UserDTO {
 
     public Long getId() {
         return id;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
     }
 
     public void setId(Long id) {
