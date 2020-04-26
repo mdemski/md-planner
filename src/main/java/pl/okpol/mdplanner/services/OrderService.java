@@ -8,6 +8,7 @@ import pl.okpol.mdplanner.dto.OrderDTO;
 import pl.okpol.mdplanner.model.Order;
 import pl.okpol.mdplanner.repositories.OrderRepository;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
@@ -50,13 +51,12 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public List<OrderDTO> getAllToProduceOrders(){
+    public List<OrderDTO> getAllOrders(){
         Page ordersDTO = orderRepository.findAllByInCompleted(PageRequest.of(0,100));
         List<Order> content = ordersDTO.getContent();
         return content.stream().map(source -> {
             OrderDTO dto = new OrderDTO();
             dto.setId(source.getId());
-            dto.setOfferNumber(source.getOfferNumber());
             dto.setOfferNumber(source.getOfferNumber());
             dto.setReferenceNumber(source.getReferenceNumber());
             dto.setNumber(source.getNumber());
@@ -80,5 +80,13 @@ public class OrderService {
             dto.setComments(source.getComments());
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    public Order findOneById(Long id) throws Throwable {
+        return (Order) orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No id"));
+    }
+
+    public Order findOneByNumber(Integer number) {
+        return orderRepository.findByNumber(number);
     }
 }
