@@ -7,8 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import pl.okpol.mdplanner.model.AbstractEntity;
 import pl.okpol.mdplanner.model.Order;
 
-public interface OrderRepository<T extends AbstractEntity, L extends Number> extends JpaRepository<Order, Long> {
+import java.util.Optional;
+
+public interface OrderRepository <T extends AbstractEntity, L extends Number> extends JpaRepository<Order, Long> {
     
     @Query(value = "SELECT * FROM orders WHERE completed = 0", nativeQuery = true)
     Page<Order> findAllByInCompleted(Pageable pageable);
+
+    Optional<Order> findById(Long id);
+
+    Order findByNumber(Integer number);
 }
