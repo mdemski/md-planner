@@ -1,5 +1,6 @@
 package pl.okpol.mdplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -39,6 +40,7 @@ public class Order extends AbstractEntity {
     @JoinTable(name = "ORDER_PALLET", joinColumns = {
             @JoinColumn(name = "ORDER_ID") },
             inverseJoinColumns = {@JoinColumn(name = "PALLET_ID")})
+    @JsonIgnore
     private List<Pallet> pallets;
     private boolean completed;
     private String comments;
