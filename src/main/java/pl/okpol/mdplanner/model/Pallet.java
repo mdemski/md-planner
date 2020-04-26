@@ -1,5 +1,7 @@
 package pl.okpol.mdplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +14,7 @@ public class Pallet extends AbstractEntity {
     private Integer depth;
     private Integer height;
     @ManyToMany (fetch = FetchType.LAZY, mappedBy = "pallets")
+    @JsonIgnore
     private List<Order> orders;
 
     public Pallet() {
