@@ -26,11 +26,11 @@ public class OrderDTO {
     private LocalDate productionTime;
     private LocalDate dateOfShipment;
     private Integer expectationWeekNumber;
-    private List<Pallet> pallets;
+    private List<String> pallets;
     private boolean completed;
     private String comments;
 
-    public OrderDTO(Long id, Integer offerNumber, String referenceNumber, Integer number, String client, String profileSystem, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<Pallet> pallets, boolean completed, String comments) {
+    public OrderDTO(Long id, Integer offerNumber, String referenceNumber, Integer number, String client, String profileSystem, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<String> pallets, boolean completed, String comments) {
         this.id = id;
         this.offerNumber = offerNumber;
         this.referenceNumber = referenceNumber;
@@ -210,11 +210,11 @@ public class OrderDTO {
         this.expectationWeekNumber = expectationWeekNumber;
     }
 
-    public List<Pallet> getPallets() {
+    public List<String> getPallets() {
         return pallets;
     }
 
-    public void setPallets(List<Pallet> pallets) {
+    public void setPallets(List<String> pallets) {
         this.pallets = pallets;
     }
 
