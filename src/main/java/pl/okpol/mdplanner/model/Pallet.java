@@ -10,9 +10,7 @@ import java.util.Objects;
 @Table(name = "pallets")
 public class Pallet extends AbstractEntity {
 
-    private Integer width;
-    private Integer depth;
-    private Integer height;
+    private String size;
     @ManyToMany (fetch = FetchType.LAZY, mappedBy = "pallets")
     @JsonIgnore
     private List<Order> orders;
@@ -20,43 +18,21 @@ public class Pallet extends AbstractEntity {
     public Pallet() {
     }
 
-    public Pallet(Integer width, Integer depth, Integer height, List<Order> orders) {
-        this.width = width;
-        this.depth = depth;
-        this.height = height;
+    public Pallet(String size, List<Order> orders) {
+        this.size = size;
         this.orders = orders;
     }
 
-    public Integer getWidth() {
-        return width;
+    public String getSize() {
+        return size;
     }
 
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    public Integer getDepth() {
-        return depth;
-    }
-
-    public void setDepth(Integer depth) {
-        this.depth = depth;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setHeight(Integer height) {
-        this.height = height;
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public List<Order> getOrders() {
         return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 
     @Override
@@ -65,13 +41,16 @@ public class Pallet extends AbstractEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Pallet pallet = (Pallet) o;
-        return Objects.equals(width, pallet.width) &&
-                Objects.equals(depth, pallet.depth) &&
-                Objects.equals(height, pallet.height);
+        return Objects.equals(size, pallet.size) &&
+                Objects.equals(orders, pallet.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), width, depth, height);
+        return Objects.hash(super.hashCode(), size, orders);
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
