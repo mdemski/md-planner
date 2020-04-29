@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class OrderService {
 
-    private OrderRepository orderRepository;
+    private OrderRepository<pl.okpol.mdplanner.model.AbstractEntity, Number> orderRepository;
     private PalletMapper palletMapper;
     private static final LocalDate defaultDate = LocalDate.parse("1991-01-01");
 
-    public OrderService(OrderRepository orderRepository, PalletMapper palletMapper) {
+    public OrderService(OrderRepository<pl.okpol.mdplanner.model.AbstractEntity, Number> orderRepository, PalletMapper palletMapper) {
         this.orderRepository = orderRepository;
         this.palletMapper = palletMapper;
     }
@@ -55,7 +55,7 @@ public class OrderService {
     }
 
     public List<OrderDTO> getAllOrders(){
-        Page ordersDTO = orderRepository.findAllByInCompleted(PageRequest.of(0,100));
+        Page<Order> ordersDTO = orderRepository.findAllByInCompleted(PageRequest.of(0,100));
         List<Order> content = ordersDTO.getContent();
         return content.stream().map(source -> {
             OrderDTO dto = new OrderDTO();
@@ -106,5 +106,9 @@ public class OrderService {
         order.setCompleted(orderDTO.isCompleted());
         order.setComments(orderDTO.getComments());
         orderRepository.save(order);
+    }
+
+    public void deleteOrder(Order order) {
+        orderRepository.delete(order);
     }
 }
