@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.okpol.mdplanner.dto.AddedOrderDTO;
 import pl.okpol.mdplanner.dto.OrderDTO;
+import pl.okpol.mdplanner.mappers.PalletMapper;
 import pl.okpol.mdplanner.model.Order;
 import pl.okpol.mdplanner.repositories.OrderRepository;
 
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 public class OrderService {
 
     private OrderRepository orderRepository;
+    private PalletMapper palletMapper;
     private static final LocalDate defaultDate = LocalDate.parse("1991-01-01");
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, PalletMapper palletMapper) {
         this.orderRepository = orderRepository;
+        this.palletMapper = palletMapper;
     }
 
     public void saveOrderInDB(AddedOrderDTO addedOrderDTO) {
@@ -75,7 +78,7 @@ public class OrderService {
             dto.setProductionTime(source.getProductionTime());
             dto.setDateOfShipment(source.getDateOfShipment());
             dto.setExpectationWeekNumber(source.getExpectationWeekNumber());
-            dto.setPallets(source.getPallets());
+            dto.setPallets(palletMapper.fromPalletsToStringConverter(source.getPallets()));
             dto.setCompleted(source.isCompleted());
             dto.setComments(source.getComments());
             return dto;
@@ -88,5 +91,20 @@ public class OrderService {
 
     public Order findOneByNumber(Integer number) {
         return orderRepository.findByNumber(number);
+    }
+
+    public void updateOrder(Integer number, OrderDTO orderDTO) {
+        Order order = orderRepository.findByNumber(number);
+        order.setProfileDatedDelivery(orderDTO.getProfileDatedDelivery());
+        order.setHardwareDatedDelivery(orderDTO.getHardwareDatedDelivery());
+        order.setGlazingDatedDelivery(orderDTO.getGlazingDatedDelivery());
+        order.setExtrasDatedDelivery(orderDTO.getExtrasDatedDelivery());
+        order.setOptimizationNumber(orderDTO.getOptimizationNumber());
+        order.setProductionTime(orderDTO.getProductionTime());
+        order.setDateOfShipment(orderDTO.getDateOfShipment());
+        order.setPallets(palletMapper.fromStringToPalletsConverter(orderDTO.getPallets()));
+        order.setCompleted(orderDTO.isCompleted());
+        order.setComments(orderDTO.getComments());
+        orderRepository.save(order);
     }
 }
