@@ -36,7 +36,7 @@ public class Order extends AbstractEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfShipment;
     private Integer expectationWeekNumber;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "ORDER_PALLET", joinColumns = {
             @JoinColumn(name = "ORDER_ID") },
             inverseJoinColumns = {@JoinColumn(name = "PALLET_ID")})
