@@ -2,16 +2,19 @@ package pl.okpol.mdplanner.controllers;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.okpol.mdplanner.dto.AddedOrderDTO;
 import pl.okpol.mdplanner.dto.OrderDTO;
 import pl.okpol.mdplanner.mappers.OrderMapper;
+import pl.okpol.mdplanner.mappers.PalletMapper;
 import pl.okpol.mdplanner.model.Order;
+import pl.okpol.mdplanner.model.Pallet;
+import pl.okpol.mdplanner.repositories.PalletRepository;
 import pl.okpol.mdplanner.services.OrderService;
 
+import javax.validation.Valid;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -25,10 +28,14 @@ public class OrderController {
 
     private OrderService orderService;
     private OrderMapper orderMapper;
+    private PalletRepository palletRepository;
+    private PalletMapper palletMapper;
 
-    public OrderController(OrderService orderService, OrderMapper orderMapper) {
+    public OrderController(OrderService orderService, OrderMapper orderMapper, PalletRepository palletRepository, PalletMapper palletMapper) {
         this.orderService = orderService;
         this.orderMapper = orderMapper;
+        this.palletRepository = palletRepository;
+        this.palletMapper = palletMapper;
     }
 
     @GetMapping
@@ -71,6 +78,25 @@ public class OrderController {
         try {
             Order order = orderService.findOneByNumber(number);
             return order;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+
+    @PutMapping("/{number}")
+    public Order processOrderUpdate(@PathVariable Integer number, @Valid @RequestBody OrderDTO orderDTO) {
+        try {
+            orderDTO.getPallets().forEach(pallet ->{
+                Pallet pallet1 = new Pallet();
+                pallet1.setSize(pallet);
+                palletRepository.save(pallet1);
+            });
+            orderService.updateOrder(number, orderDTO);
+            return orderMapper.convertToEntityOrder(orderDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to update order");
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
