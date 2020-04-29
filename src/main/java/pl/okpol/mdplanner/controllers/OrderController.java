@@ -102,4 +102,16 @@ public class OrderController {
         }
         return null;
     }
+
+    @DeleteMapping("/{number}")
+    public String processOrderDelete(@PathVariable Integer number) {
+        try {
+            Order order = orderService.findOneByNumber(number);
+            orderService.deleteOrder(order);
+            return "Delete success";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Failed to delete";
+    }
 }
