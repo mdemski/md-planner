@@ -2,6 +2,8 @@ package pl.okpol.mdplanner.dto;
 
 import com.opencsv.bean.CsvBindByName;
 
+import javax.persistence.Id;
+
 public class AddedOrderDTO {
 
     @CsvBindByName
@@ -9,6 +11,7 @@ public class AddedOrderDTO {
     @CsvBindByName
     private String reference;
     @CsvBindByName
+    @Id
     private Integer number;
     @CsvBindByName
     private String client;
