@@ -4,12 +4,12 @@ import org.springframework.stereotype.Component;
 import pl.okpol.mdplanner.dto.AddedOrderDTO;
 import pl.okpol.mdplanner.dto.OrderDTO;
 import pl.okpol.mdplanner.model.Order;
+import pl.okpol.mdplanner.model.Pallet;
 import pl.okpol.mdplanner.services.OrderService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class OrderMapper {
@@ -42,7 +42,7 @@ public class OrderMapper {
         dto.setProductionTime(entity.getProductionTime());
         dto.setDateOfShipment(entity.getDateOfShipment());
         dto.setExpectationWeekNumber(entity.getExpectationWeekNumber());
-        dto.setPallets(entity.getPallets());
+        dto.setPallets(fromPalletsToStringConverter(entity.getPallets()));
         dto.setCompleted(entity.isCompleted());
         dto.setComments(entity.getComments());
         return dto;
@@ -68,7 +68,7 @@ public class OrderMapper {
         order.setProductionTime(orderDTO.getProductionTime());
         order.setDateOfShipment(orderDTO.getDateOfShipment());
         order.setExpectationWeekNumber(orderDTO.getExpectationWeekNumber());
-        order.setPallets(orderDTO.getPallets());
+        order.setPallets(fromStringToPalletsConverter(orderDTO.getPallets()));
         order.setCompleted(orderDTO.isCompleted());
         order.setComments(orderDTO.getComments());
         return order;
@@ -115,12 +115,30 @@ public class OrderMapper {
             order.setProductionTime(orderDTO.getProductionTime());
             order.setDateOfShipment(orderDTO.getDateOfShipment());
             order.setExpectationWeekNumber(orderDTO.getExpectationWeekNumber());
-            order.setPallets(orderDTO.getPallets());
+            order.setPallets(fromStringToPalletsConverter(orderDTO.getPallets()));
             order.setCompleted(orderDTO.isCompleted());
             order.setComments(orderDTO.getComments());
             orders.add(order);
         });
         return orders;
+    }
+
+    private List<String> fromPalletsToStringConverter(List<Pallet> palletList) {
+        List<String> stringListPallet = new ArrayList<>();
+        palletList.forEach(pallet -> {
+            stringListPallet.add(pallet.toString());
+        });
+        return stringListPallet;
+    }
+
+    private List<Pallet> fromStringToPalletsConverter(List<String> palletsFromRequest) {
+        List<Pallet> pallets = new ArrayList<>();
+        palletsFromRequest.forEach(pallet -> {
+            Pallet pallet1 = new Pallet();
+            pallet1.setSize(pallet);
+            pallets.add(pallet1);
+        });
+        return pallets;
     }
 
 }
