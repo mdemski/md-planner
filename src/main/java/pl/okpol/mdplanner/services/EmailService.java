@@ -3,6 +3,7 @@ package pl.okpol.mdplanner.services;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import pl.okpol.mdplanner.dto.OrderDTO;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -45,4 +46,9 @@ public class EmailService {
     }
 
 
+    public void sendNewProductionTime(String email, String serverAddress, OrderDTO orderDTO) {
+        String htmlMsg = "Termin realizacji zlecenia: " + orderDTO.getNumber() + "uległ zmianie. Nowa data realizacji to: " + orderDTO.getProductionTime();
+        String title = "MDPlanner - zmiana daty realizacji, zlecenie: " + orderDTO.getNumber();
+        sendHTMLMessage(email, htmlMsg, title);
+    }
 }
