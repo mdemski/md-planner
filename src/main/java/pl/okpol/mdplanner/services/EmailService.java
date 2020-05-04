@@ -47,7 +47,18 @@ public class EmailService {
 
 
     public void sendNewProductionTime(String email, OrderDTO orderDTO) {
-        String htmlMsg = "Termin realizacji zlecenia nr " + orderDTO.getNumber() + " uległ zmianie.\nNowa data realizacji to: " + orderDTO.getProductionTime();
+        String commentToOrder = orderDTO.getComments();
+        if (commentToOrder == null) {
+            commentToOrder = "Brak";
+        }
+        String htmlMsg = "Termin realizacji zlecenia nr " + orderDTO.getNumber() + " uległ zmianie." + "<br>"
+                + "Nowa data realizacji to: "
+                + orderDTO.getProductionTime()
+                + "<br>"
+                + "<br>"
+                + "<br>"
+                + "<br>"
+                + "Komenatrz do zlecenia: " + commentToOrder;
         String title = "MDPlanner - zmiana daty realizacji, zlecenie nr " + orderDTO.getNumber();
         sendHTMLMessage(email, htmlMsg, title);
     }
