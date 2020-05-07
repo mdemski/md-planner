@@ -7,12 +7,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.okpol.mdplanner.dto.AddedOrderDTO;
 import pl.okpol.mdplanner.dto.OrderDTO;
+import pl.okpol.mdplanner.mappers.DateConverter;
 import pl.okpol.mdplanner.mappers.OrderMapper;
 import pl.okpol.mdplanner.mappers.PalletMapper;
 import pl.okpol.mdplanner.model.Order;
 import pl.okpol.mdplanner.model.Pallet;
+import pl.okpol.mdplanner.model.User;
 import pl.okpol.mdplanner.repositories.PalletRepository;
+import pl.okpol.mdplanner.services.EmailService;
 import pl.okpol.mdplanner.services.OrderService;
+import pl.okpol.mdplanner.services.UserService;
 
 import javax.validation.Valid;
 import java.io.BufferedReader;
@@ -30,12 +34,16 @@ public class OrderController {
     private OrderMapper orderMapper;
     private PalletRepository palletRepository;
     private PalletMapper palletMapper;
+    private EmailService emailService;
+    private UserService userService;
 
-    public OrderController(OrderService orderService, OrderMapper orderMapper, PalletRepository palletRepository, PalletMapper palletMapper) {
+    public OrderController(OrderService orderService, OrderMapper orderMapper, PalletRepository palletRepository, PalletMapper palletMapper, EmailService emailService, UserService userService) {
         this.orderService = orderService;
         this.orderMapper = orderMapper;
         this.palletRepository = palletRepository;
         this.palletMapper = palletMapper;
+        this.emailService = emailService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -92,6 +100,14 @@ public class OrderController {
                 pallet1.setSize(pallet);
                 palletRepository.save(pallet1);
             });
+            Order orderBeforeChange = orderService.findOneByNumber(number);
+            if (!(DateConverter.convertFromDateToString(orderBeforeChange.getProductionTime()).equals(orderDTO.getProductionTime()))) {
+                List<User> allUsers = userService.findAllUsers();
+                allUsers.forEach(user -> {
+                    System.out.println(user.getEmail());
+                    emailService.sendNewProductionTime(user.getEmail(), orderDTO);
+                });
+            }
             orderService.updateOrder(number, orderDTO);
             return orderMapper.convertToEntityOrder(orderDTO);
         } catch (Exception e) {
