@@ -14,23 +14,23 @@ public class OrderDTO {
     private String client;
     private String profileSystem;
     private String colour;
-    private LocalDate profileDatedDelivery;
-    private LocalDate hardwareDatedDelivery;
-    private LocalDate glazingDatedDelivery;
-    private LocalDate extrasDatedDelivery;
+    private String profileDatedDelivery;
+    private String hardwareDatedDelivery;
+    private String glazingDatedDelivery;
+    private String extrasDatedDelivery;
     private Integer optimizationNumber;
     private Double windowUnits;
     private Integer numberOfWindows;
     private Integer numberOfDoors;
     private Integer numberOfSlidingDoors;
-    private LocalDate productionTime;
-    private LocalDate dateOfShipment;
+    private String productionTime;
+    private String dateOfShipment;
     private Integer expectationWeekNumber;
     private List<String> pallets;
     private boolean completed;
     private String comments;
 
-    public OrderDTO(Long id, Integer offerNumber, String referenceNumber, Integer number, String client, String profileSystem, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<String> pallets, boolean completed, String comments) {
+    public OrderDTO(Long id, Integer offerNumber, String referenceNumber, Integer number, String client, String profileSystem, String colour, String profileDatedDelivery, String hardwareDatedDelivery, String glazingDatedDelivery, String extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, String productionTime, String dateOfShipment, Integer expectationWeekNumber, List<String> pallets, boolean completed, String comments) {
         this.id = id;
         this.offerNumber = offerNumber;
         this.referenceNumber = referenceNumber;
@@ -114,35 +114,35 @@ public class OrderDTO {
         this.colour = colour;
     }
 
-    public LocalDate getProfileDatedDelivery() {
+    public String getProfileDatedDelivery() {
         return profileDatedDelivery;
     }
 
-    public void setProfileDatedDelivery(LocalDate profileDatedDelivery) {
+    public void setProfileDatedDelivery(String profileDatedDelivery) {
         this.profileDatedDelivery = profileDatedDelivery;
     }
 
-    public LocalDate getHardwareDatedDelivery() {
+    public String getHardwareDatedDelivery() {
         return hardwareDatedDelivery;
     }
 
-    public void setHardwareDatedDelivery(LocalDate hardwareDatedDelivery) {
+    public void setHardwareDatedDelivery(String hardwareDatedDelivery) {
         this.hardwareDatedDelivery = hardwareDatedDelivery;
     }
 
-    public LocalDate getGlazingDatedDelivery() {
+    public String getGlazingDatedDelivery() {
         return glazingDatedDelivery;
     }
 
-    public void setGlazingDatedDelivery(LocalDate glazingDatedDelivery) {
+    public void setGlazingDatedDelivery(String glazingDatedDelivery) {
         this.glazingDatedDelivery = glazingDatedDelivery;
     }
 
-    public LocalDate getExtrasDatedDelivery() {
+    public String getExtrasDatedDelivery() {
         return extrasDatedDelivery;
     }
 
-    public void setExtrasDatedDelivery(LocalDate extrasDatedDelivery) {
+    public void setExtrasDatedDelivery(String extrasDatedDelivery) {
         this.extrasDatedDelivery = extrasDatedDelivery;
     }
 
@@ -186,19 +186,19 @@ public class OrderDTO {
         this.numberOfSlidingDoors = numberOfSlidingDoors;
     }
 
-    public LocalDate getProductionTime() {
+    public String getProductionTime() {
         return productionTime;
     }
 
-    public void setProductionTime(LocalDate productionTime) {
+    public void setProductionTime(String productionTime) {
         this.productionTime = productionTime;
     }
 
-    public LocalDate getDateOfShipment() {
+    public String getDateOfShipment() {
         return dateOfShipment;
     }
 
-    public void setDateOfShipment(LocalDate dateOfShipment) {
+    public void setDateOfShipment(String dateOfShipment) {
         this.dateOfShipment = dateOfShipment;
     }
 
