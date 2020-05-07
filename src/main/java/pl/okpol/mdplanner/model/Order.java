@@ -24,35 +24,40 @@ public class Order extends AbstractEntity {
     private String client;
     private String profileSystem;
     private String colour;
-//    @DateTimeFormat(pattern = "MM/dd/yyyy")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
+//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate profileDatedDelivery;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
+//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate hardwareDatedDelivery;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
+//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate glazingDatedDelivery;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
+//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate extrasDatedDelivery;
     private Integer optimizationNumber;
     private Double windowUnits;
     private Integer numberOfWindows;
     private Integer numberOfDoors;
     private Integer numberOfSlidingDoors;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
+//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate productionTime;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
+//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dateOfShipment;
     private Integer expectationWeekNumber;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
