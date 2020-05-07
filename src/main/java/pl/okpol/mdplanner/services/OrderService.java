@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.okpol.mdplanner.dto.AddedOrderDTO;
 import pl.okpol.mdplanner.dto.OrderDTO;
+import pl.okpol.mdplanner.mappers.DateConverter;
 import pl.okpol.mdplanner.mappers.PalletMapper;
 import pl.okpol.mdplanner.model.Order;
 import pl.okpol.mdplanner.repositories.OrderRepository;
@@ -19,11 +20,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class OrderService {
 
-    private OrderRepository<pl.okpol.mdplanner.model.AbstractEntity, Number> orderRepository;
+    private OrderRepository orderRepository;
     private PalletMapper palletMapper;
-    private static final LocalDate defaultDate = LocalDate.parse("1991-01-01");
+//    private static final LocalDate defaultDate = LocalDate.parse("01-01-1991");
 
-    public OrderService(OrderRepository<pl.okpol.mdplanner.model.AbstractEntity, Number> orderRepository, PalletMapper palletMapper) {
+    public OrderService(OrderRepository orderRepository, PalletMapper palletMapper) {
         this.orderRepository = orderRepository;
         this.palletMapper = palletMapper;
     }
@@ -54,8 +55,8 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public List<OrderDTO> getAllOrders(){
-        Page<Order> ordersDTO = orderRepository.findAllByInCompleted(PageRequest.of(0,100));
+    public List<OrderDTO> getAllOrders() {
+        Page<Order> ordersDTO = orderRepository.findAllByInCompleted(PageRequest.of(0, 100));
         List<Order> content = ordersDTO.getContent();
         return content.stream().map(source -> {
             OrderDTO dto = new OrderDTO();
@@ -66,17 +67,17 @@ public class OrderService {
             dto.setClient(source.getClient());
             dto.setProfileSystem(source.getProfileSystem());
             dto.setColour(source.getColour());
-            dto.setProfileDatedDelivery(source.getProfileDatedDelivery());
-            dto.setHardwareDatedDelivery(source.getHardwareDatedDelivery());
-            dto.setGlazingDatedDelivery(source.getGlazingDatedDelivery());
-            dto.setExtrasDatedDelivery(source.getExtrasDatedDelivery());
+            dto.setProfileDatedDelivery(DateConverter.convertFromDateToString(source.getProfileDatedDelivery()));
+            dto.setHardwareDatedDelivery(DateConverter.convertFromDateToString(source.getHardwareDatedDelivery()));
+            dto.setGlazingDatedDelivery(DateConverter.convertFromDateToString(source.getGlazingDatedDelivery()));
+            dto.setExtrasDatedDelivery(DateConverter.convertFromDateToString(source.getExtrasDatedDelivery()));
             dto.setOptimizationNumber(source.getOptimizationNumber());
             dto.setWindowUnits(source.getWindowUnits());
             dto.setNumberOfWindows(source.getNumberOfWindows());
             dto.setNumberOfDoors(source.getNumberOfDoors());
             dto.setNumberOfSlidingDoors(source.getNumberOfSlidingDoors());
-            dto.setProductionTime(source.getProductionTime());
-            dto.setDateOfShipment(source.getDateOfShipment());
+            dto.setProductionTime(DateConverter.convertFromDateToString(source.getProductionTime()));
+            dto.setDateOfShipment(DateConverter.convertFromDateToString(source.getDateOfShipment()));
             dto.setExpectationWeekNumber(source.getExpectationWeekNumber());
             dto.setPallets(palletMapper.fromPalletsToStringConverter(source.getPallets()));
             dto.setCompleted(source.isCompleted());
@@ -95,13 +96,13 @@ public class OrderService {
 
     public void updateOrder(Integer number, OrderDTO orderDTO) {
         Order order = orderRepository.findByNumber(number);
-        order.setProfileDatedDelivery(orderDTO.getProfileDatedDelivery());
-        order.setHardwareDatedDelivery(orderDTO.getHardwareDatedDelivery());
-        order.setGlazingDatedDelivery(orderDTO.getGlazingDatedDelivery());
-        order.setExtrasDatedDelivery(orderDTO.getExtrasDatedDelivery());
+        order.setProfileDatedDelivery(DateConverter.convertFromStringToDate(orderDTO.getProfileDatedDelivery()));
+        order.setHardwareDatedDelivery(DateConverter.convertFromStringToDate(orderDTO.getHardwareDatedDelivery()));
+        order.setGlazingDatedDelivery(DateConverter.convertFromStringToDate(orderDTO.getGlazingDatedDelivery()));
+        order.setExtrasDatedDelivery(DateConverter.convertFromStringToDate(orderDTO.getExtrasDatedDelivery()));
         order.setOptimizationNumber(orderDTO.getOptimizationNumber());
-        order.setProductionTime(orderDTO.getProductionTime());
-        order.setDateOfShipment(orderDTO.getDateOfShipment());
+        order.setProductionTime(DateConverter.convertFromStringToDate(orderDTO.getProductionTime()));
+        order.setDateOfShipment(DateConverter.convertFromStringToDate(orderDTO.getDateOfShipment()));
         order.setPallets(palletMapper.fromStringToPalletsConverter(orderDTO.getPallets()));
         order.setCompleted(orderDTO.isCompleted());
         order.setComments(orderDTO.getComments());
