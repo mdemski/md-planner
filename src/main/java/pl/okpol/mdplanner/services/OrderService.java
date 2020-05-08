@@ -30,29 +30,34 @@ public class OrderService {
     }
 
     public void saveOrderInDB(AddedOrderDTO addedOrderDTO) {
-        Order order = new Order();
-        order.setOfferNumber(addedOrderDTO.getOffer());
-        order.setReferenceNumber(addedOrderDTO.getReference());
-        order.setNumber(addedOrderDTO.getNumber());
-        order.setClient(addedOrderDTO.getClient());
-        order.setProfileSystem(addedOrderDTO.getSystem());
-        order.setColour(addedOrderDTO.getColour());
+        List<Order> orders = orderRepository.findAll();
+        orders.forEach(o -> {
+            if (!o.getNumber().equals(addedOrderDTO.getNumber())) {
+                Order order = new Order();
+                order.setOfferNumber(addedOrderDTO.getOffer());
+                order.setReferenceNumber(addedOrderDTO.getReference());
+                order.setNumber(addedOrderDTO.getNumber());
+                order.setClient(addedOrderDTO.getClient());
+                order.setProfileSystem(addedOrderDTO.getSystem());
+                order.setColour(addedOrderDTO.getColour());
 //        order.setProfileDatedDelivery(defaultDate);
 //        order.setHardwareDatedDelivery(defaultDate);
 //        order.setGlazingDatedDelivery(defaultDate);
 //        order.setExtrasDatedDelivery(defaultDate);
 //        order.setOptimizationNumber(0);
-        order.setWindowUnits(addedOrderDTO.getUnits());
-        order.setNumberOfWindows(addedOrderDTO.getWindows());
-        order.setNumberOfDoors(addedOrderDTO.getDoors());
-        order.setNumberOfSlidingDoors(addedOrderDTO.getSlidings());
+                order.setWindowUnits(addedOrderDTO.getUnits());
+                order.setNumberOfWindows(addedOrderDTO.getWindows());
+                order.setNumberOfDoors(addedOrderDTO.getDoors());
+                order.setNumberOfSlidingDoors(addedOrderDTO.getSlidings());
 //        order.setProductionTime(defaultDate);
 //        order.setDateOfShipment(defaultDate);
 //        order.setExpectationWeekNumber(LocalDate.now().getDayOfYear()/7);
 //        order.setPallets(new ArrayList<>());
-        order.setCompleted(false);
+                order.setCompleted(false);
 //        order.setComments("");
-        orderRepository.save(order);
+                orderRepository.save(order);
+            }
+        });
     }
 
     public List<OrderDTO> getAllOrders() {
