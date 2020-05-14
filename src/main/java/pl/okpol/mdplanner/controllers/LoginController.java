@@ -33,8 +33,6 @@ public class LoginController {
         User logInUser = userService.findByEmail(loginData.getEmail());
         if (logInUser == null) {
             System.out.println("Failed to login, no user in database.");
-        } else if (logInUser.isActivated()) {
-            System.out.println("Login success, current user: " + logInUser.getFirstName());
         } else if (!loginData.getPassword().equals(logInUser.getPassword())){
             System.out.println("Failed to login, bad credentials.");
         } else {
