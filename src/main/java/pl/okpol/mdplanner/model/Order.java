@@ -35,6 +35,7 @@ public class Order extends AbstractEntity {
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate dateOfShipment;
     private Integer expectationWeekNumber;
+    @ElementCollection
     private List<String> pallets;
     private boolean completed;
     private String comments;
