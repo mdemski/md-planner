@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.okpol.mdplanner.dto.AddedOrderDTO;
 import pl.okpol.mdplanner.dto.OrderDTO;
-import pl.okpol.mdplanner.mappers.DateConverter;
 import pl.okpol.mdplanner.mappers.OrderMapper;
 import pl.okpol.mdplanner.mappers.PalletMapper;
 import pl.okpol.mdplanner.model.Order;
@@ -55,7 +54,7 @@ public class OrderController {
     @PostMapping
     public List<Order> processUploadFile(@RequestParam("file") MultipartFile file, Model model) {
 
-        if(file.isEmpty()){
+        if (file.isEmpty()) {
             System.out.println("Wybierz plik CSV do wczytania");
         } else {
             // parse CSV file to create a list of `User` objects
@@ -95,18 +94,20 @@ public class OrderController {
     @PutMapping("/{number}")
     public Order processOrderUpdate(@PathVariable Integer number, @Valid @RequestBody OrderDTO orderDTO) {
         try {
-            orderDTO.getPallets().forEach(pallet ->{
+            orderDTO.getPallets().forEach(pallet -> {
                 Pallet pallet1 = new Pallet();
                 pallet1.setSize(pallet);
                 palletRepository.save(pallet1);
             });
             Order orderBeforeChange = orderService.findOneByNumber(number);
-            if (!(DateConverter.convertFromDateToString(orderBeforeChange.getProductionTime()).equals(orderDTO.getProductionTime()))) {
-                List<User> allUsers = userService.findAllUsers();
-                allUsers.forEach(user -> {
-                    System.out.println(user.getEmail());
-                    emailService.sendNewProductionTime(user.getEmail(), orderDTO);
-                });
+            if (orderBeforeChange.getProductionTime() != null) {
+                if (!(orderBeforeChange.getProductionTime()).equals(orderDTO.getProductionTime())) {
+                    List<User> allUsers = userService.findAllUsers();
+                    allUsers.forEach(user -> {
+                        System.out.println(user.getEmail());
+                        emailService.sendNewProductionTime(user.getEmail(), orderDTO);
+                    });
+                }
             }
             orderService.updateOrder(number, orderDTO);
             return orderMapper.convertToEntityOrder(orderDTO);
