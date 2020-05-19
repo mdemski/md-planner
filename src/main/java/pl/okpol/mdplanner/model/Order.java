@@ -1,16 +1,10 @@
 package pl.okpol.mdplanner.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,24 +19,12 @@ public class Order extends AbstractEntity {
     private String profileSystem;
     private String colour;
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate profileDatedDelivery;
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate hardwareDatedDelivery;
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate glazingDatedDelivery;
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate extrasDatedDelivery;
     private Integer optimizationNumber;
     private Double windowUnits;
@@ -50,14 +32,8 @@ public class Order extends AbstractEntity {
     private Integer numberOfDoors;
     private Integer numberOfSlidingDoors;
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate productionTime;
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dateOfShipment;
     private Integer expectationWeekNumber;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
