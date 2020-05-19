@@ -8,11 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.okpol.mdplanner.dto.AddedOrderDTO;
 import pl.okpol.mdplanner.dto.OrderDTO;
 import pl.okpol.mdplanner.mappers.OrderMapper;
-import pl.okpol.mdplanner.mappers.PalletMapper;
 import pl.okpol.mdplanner.model.Order;
-import pl.okpol.mdplanner.model.Pallet;
 import pl.okpol.mdplanner.model.User;
-import pl.okpol.mdplanner.repositories.PalletRepository;
 import pl.okpol.mdplanner.services.EmailService;
 import pl.okpol.mdplanner.services.OrderService;
 import pl.okpol.mdplanner.services.UserService;
@@ -31,16 +28,12 @@ public class OrderController {
 
     private OrderService orderService;
     private OrderMapper orderMapper;
-    private PalletRepository palletRepository;
-    private PalletMapper palletMapper;
     private EmailService emailService;
     private UserService userService;
 
-    public OrderController(OrderService orderService, OrderMapper orderMapper, PalletRepository palletRepository, PalletMapper palletMapper, EmailService emailService, UserService userService) {
+    public OrderController(OrderService orderService, OrderMapper orderMapper, EmailService emailService, UserService userService) {
         this.orderService = orderService;
         this.orderMapper = orderMapper;
-        this.palletRepository = palletRepository;
-        this.palletMapper = palletMapper;
         this.emailService = emailService;
         this.userService = userService;
     }
@@ -94,11 +87,6 @@ public class OrderController {
     @PutMapping("/{number}")
     public Order processOrderUpdate(@PathVariable Integer number, @Valid @RequestBody OrderDTO orderDTO) {
         try {
-            orderDTO.getPallets().forEach(pallet -> {
-                Pallet pallet1 = new Pallet();
-                pallet1.setSize(pallet);
-                palletRepository.save(pallet1);
-            });
             Order orderBeforeChange = orderService.findOneByNumber(number);
             if (orderBeforeChange.getProductionTime() != null) {
                 if (!(orderBeforeChange.getProductionTime()).equals(orderDTO.getProductionTime())) {
