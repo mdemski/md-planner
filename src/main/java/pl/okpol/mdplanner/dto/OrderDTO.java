@@ -1,6 +1,6 @@
 package pl.okpol.mdplanner.dto;
-
-import pl.okpol.mdplanner.model.Pallet;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,23 +14,23 @@ public class OrderDTO {
     private String client;
     private String profileSystem;
     private String colour;
-    private String profileDatedDelivery;
-    private String hardwareDatedDelivery;
-    private String glazingDatedDelivery;
-    private String extrasDatedDelivery;
+    private LocalDate profileDatedDelivery;
+    private LocalDate hardwareDatedDelivery;
+    private LocalDate glazingDatedDelivery;
+    private LocalDate extrasDatedDelivery;
     private Integer optimizationNumber;
     private Double windowUnits;
     private Integer numberOfWindows;
     private Integer numberOfDoors;
     private Integer numberOfSlidingDoors;
-    private String productionTime;
-    private String dateOfShipment;
+    private LocalDate productionTime;
+    private LocalDate dateOfShipment;
     private Integer expectationWeekNumber;
     private List<String> pallets;
     private boolean completed;
     private String comments;
 
-    public OrderDTO(Long id, Integer offerNumber, String referenceNumber, Integer number, String client, String profileSystem, String colour, String profileDatedDelivery, String hardwareDatedDelivery, String glazingDatedDelivery, String extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, String productionTime, String dateOfShipment, Integer expectationWeekNumber, List<String> pallets, boolean completed, String comments) {
+    public OrderDTO(Long id, Integer offerNumber, String referenceNumber, Integer number, String client, String profileSystem, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<String> pallets, boolean completed, String comments) {
         this.id = id;
         this.offerNumber = offerNumber;
         this.referenceNumber = referenceNumber;
@@ -114,35 +114,35 @@ public class OrderDTO {
         this.colour = colour;
     }
 
-    public String getProfileDatedDelivery() {
+    public LocalDate getProfileDatedDelivery() {
         return profileDatedDelivery;
     }
 
-    public void setProfileDatedDelivery(String profileDatedDelivery) {
+    public void setProfileDatedDelivery(LocalDate profileDatedDelivery) {
         this.profileDatedDelivery = profileDatedDelivery;
     }
 
-    public String getHardwareDatedDelivery() {
+    public LocalDate getHardwareDatedDelivery() {
         return hardwareDatedDelivery;
     }
 
-    public void setHardwareDatedDelivery(String hardwareDatedDelivery) {
+    public void setHardwareDatedDelivery(LocalDate hardwareDatedDelivery) {
         this.hardwareDatedDelivery = hardwareDatedDelivery;
     }
 
-    public String getGlazingDatedDelivery() {
+    public LocalDate getGlazingDatedDelivery() {
         return glazingDatedDelivery;
     }
 
-    public void setGlazingDatedDelivery(String glazingDatedDelivery) {
+    public void setGlazingDatedDelivery(LocalDate glazingDatedDelivery) {
         this.glazingDatedDelivery = glazingDatedDelivery;
     }
 
-    public String getExtrasDatedDelivery() {
+    public LocalDate getExtrasDatedDelivery() {
         return extrasDatedDelivery;
     }
 
-    public void setExtrasDatedDelivery(String extrasDatedDelivery) {
+    public void setExtrasDatedDelivery(LocalDate extrasDatedDelivery) {
         this.extrasDatedDelivery = extrasDatedDelivery;
     }
 
@@ -186,19 +186,19 @@ public class OrderDTO {
         this.numberOfSlidingDoors = numberOfSlidingDoors;
     }
 
-    public String getProductionTime() {
+    public LocalDate getProductionTime() {
         return productionTime;
     }
 
-    public void setProductionTime(String productionTime) {
+    public void setProductionTime(LocalDate productionTime) {
         this.productionTime = productionTime;
     }
 
-    public String getDateOfShipment() {
+    public LocalDate getDateOfShipment() {
         return dateOfShipment;
     }
 
-    public void setDateOfShipment(String dateOfShipment) {
+    public void setDateOfShipment(LocalDate dateOfShipment) {
         this.dateOfShipment = dateOfShipment;
     }
 
