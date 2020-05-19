@@ -1,6 +1,5 @@
 package pl.okpol.mdplanner.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -36,17 +35,12 @@ public class Order extends AbstractEntity {
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate dateOfShipment;
     private Integer expectationWeekNumber;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "ORDER_PALLET", joinColumns = {
-            @JoinColumn(name = "ORDER_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "PALLET_ID")})
-    @JsonIgnore
-    private List<Pallet> pallets;
+    private List<String> pallets;
     private boolean completed;
     private String comments;
 
 
-    public Order(Integer offerNumber, String referenceNumber, Integer number, String client, String profileSystem, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<Pallet> pallets, boolean completed, String comments) {
+    public Order(Integer offerNumber, String referenceNumber, Integer number, String client, String profileSystem, String colour, LocalDate profileDatedDelivery, LocalDate hardwareDatedDelivery, LocalDate glazingDatedDelivery, LocalDate extrasDatedDelivery, Integer optimizationNumber, Double windowUnits, Integer numberOfWindows, Integer numberOfDoors, Integer numberOfSlidingDoors, LocalDate productionTime, LocalDate dateOfShipment, Integer expectationWeekNumber, List<String> pallets, boolean completed, String comments) {
         this.offerNumber = offerNumber;
         this.referenceNumber = referenceNumber;
         this.number = number;
@@ -217,11 +211,11 @@ public class Order extends AbstractEntity {
         this.expectationWeekNumber = expectationWeekNumber;
     }
 
-    public List<Pallet> getPallets() {
+    public List<String> getPallets() {
         return pallets;
     }
 
-    public void setPallets(List<Pallet> palletList) {
+    public void setPallets(List<String> palletList) {
         this.pallets = palletList;
     }
 
