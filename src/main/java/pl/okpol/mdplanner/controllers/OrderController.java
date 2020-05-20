@@ -96,6 +96,12 @@ public class OrderController {
                         emailService.sendNewProductionTime(user.getEmail(), orderDTO);
                     });
                 }
+            } else {
+                List<User> allUsers = userService.findAllUsers();
+                allUsers.forEach(user -> {
+                    System.out.println(user.getEmail());
+                    emailService.sendNewProductionTime(user.getEmail(), orderDTO);
+                });
             }
             orderService.updateOrder(number, orderDTO);
             return orderMapper.convertToEntityOrder(orderDTO);
