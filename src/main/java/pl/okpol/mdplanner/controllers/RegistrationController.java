@@ -74,4 +74,10 @@ public class RegistrationController {
         }
         return "Udało się aktywować konto. Zaloguj się";
     }
+
+    @GetMapping("/{email}")
+    public User getUserByEmail(@PathVariable String email) {
+        User user = userService.getUserByEmail(email);
+        return user;
+    }
 }
